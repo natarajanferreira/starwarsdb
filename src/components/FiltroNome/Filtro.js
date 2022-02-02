@@ -10,29 +10,37 @@ export const FiltroNome = () => {
   
   
   const [filter, setFilter] = useContext(SearchContext);
-  const [data, setData, filtered, performFilter] = useContext(DataContext);
+  const [data, setData, filtered, setFiltered] = useContext(DataContext);
 
   
-
   const setFiltroNome = (value) => {
     
-    console.log(value)
+    
     setFilter(prev=>{
-      return {
-        ...prev, 
+      
+      const {filterByName, filterByNumericValues} =  prev.filters;
+                
+      return ({
         "filters": {
-          "filterByName": {
-            "name": value
-          }
+            filterByName: value, 
+            filterByNumericValues
         }
-      }
+      })
+
     })
 
-    // setFilter('asdfsd')
+    performFilterName(value)
 
-    console.log(JSON.stringify(filter))
-    performFilter(value)
+  }
+  
 
+  const performFilterName = (filterTerm) => {
+    
+    if (filterTerm === '')
+      setFiltered(data)
+    else 
+      setFiltered(data.filter(planet => planet.name.includes(filterTerm)))
+    
   }
 
   return (

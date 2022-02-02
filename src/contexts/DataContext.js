@@ -23,26 +23,31 @@ export const DataProvider = props => {
   const [filtered, setFiltered] = useState([]);
 
   const updateData = (data) => {
-    // setData((prev) => ({
-    //   ...prev, 
-    //   "data": data
-    // }))
     setData(data)
     setFiltered(data)
   }
 
-  const performFilter = (filterTerm) => {
+  // const performFilterName = (filterTerm) => {
     
-    if (filterTerm === '')
-      setFiltered(data)
-    else 
-      setFiltered(data.filter(planet => planet.name.includes(filterTerm)))
+  //   if (filterTerm === '')
+  //     setFiltered(data)
+  //   else 
+  //     setFiltered(data.filter(planet => planet.name.includes(filterTerm)))
     
-  }
+  // }
+
+  // const performFilter = (filterTerm) => {
+    
+  //   if (filterTerm === '')
+  //     setFiltered(data)
+  //   else 
+  //     setFiltered(data.filter(planet => planet.name.includes(filterTerm)))
+    
+  // }
 
 
   return (
-    <DataContext.Provider value={[data, updateData, filtered, performFilter]}>
+    <DataContext.Provider value={[data, updateData, filtered, setFiltered]}>
       {props.children}
     </DataContext.Provider>
   );
