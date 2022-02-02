@@ -14,17 +14,26 @@ export const FiltroNumerico = () => {
   const [data, setData, filtered, performFilter] = useContext(DataContext);
 
 
-  // const setFiltroNome = (value) => {
-  //   setFilters({
-  //     "filters": {
-  //       "filterByName": {
-  //         "name": value
-  //       }
-  //     }
-  //   })
+  const setFiltroNome = (value) => {
+    
+    
+    setFilter(prev=>{
+      return {
+        ...prev, 
+        "filters": {
+          "filterByName": {
+            "name": value
+          }
+        }
+      }
+    })
 
-  //   performFilter(value)
-  // }
+    // setFilter('asdfsd')
+
+    console.log(JSON.stringify(filter))
+    performFilter(value)
+
+  }
   
   return (
     <div>
