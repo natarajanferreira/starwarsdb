@@ -3,6 +3,9 @@ export const initial_filter = {
     "filterByName": {
       "name": ''
     },
-    "filterByNumericValues": []
+    "filterByNumericValues": [{
+      "column": "population",
+      "comparison": "maior que"
+    }]
   }
 }

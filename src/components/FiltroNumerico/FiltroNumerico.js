@@ -1,4 +1,4 @@
-import { useContext }  from 'react'
+import { useContext, useState, useEffect }  from 'react'
 
 import { SearchContext } from '../../contexts/SearchContext';
 import { DataContext } from '../../contexts/DataContext';
@@ -14,7 +14,13 @@ export const FiltroNumerico = () => {
   
   const [data, setData, filtered, setFiltered] = useContext(DataContext);
 
+  // const [myFilters, setMyFilters] = useState([])
 
+  // useEffect(() => {
+  //   if (filter?.filters?.filterByNumericValues?.length > 0)
+  //     setMyFilters(filter.filters.filterByNumericValues)
+  // }, [filter])
+  
 
   const handleFilter = () => {
     let base = filtered ? !!filtered : data
@@ -36,13 +42,46 @@ export const FiltroNumerico = () => {
     
   }
   
+  const removeFiltro = (column) => {
+
+    // setFilter(prev => {
+    //     const {filterByName, filterByNumericValues} =  prev.filters;
+    //     let newFilterByNumericValues = [...filterByNumericValues]
+    //     newFilterByNumericValues.splice(index, 1)
+    //     return ({
+    //         ...prev, 
+    //         "filters": {
+    //             filterByName, 
+    //             "filterByNumericValues": newFilterByNumericValues
+    //         }
+    //     })
+    // })
+    setFilter(prev => {
+      const {filterByName, filterByNumericValues} =  prev.filters;
+      let newFilterByNumericValues = filterByNumericValues.filter((item)=> item.column != column)
+      
+      return ({
+          ...prev, 
+          "filters": {
+              filterByName, 
+              "filterByNumericValues": newFilterByNumericValues
+          }
+      })
+  })
+}
+
+
   return (
     <div>
       <div>
         <div>{JSON.stringify(filter)}</div>
-        {/* {filter?.filters?.filterByNumericValues?.length > 0 && filter?.filters?.filterByNumericValues.length > 0 && filter.filters.filterByNumericValues.map(()=><FiltroNumericoSimples />)} */}
+        {/* <div>{JSON.stringify(myFilters)}</div> */}
+        {/* {filter?.filters?.filterByNumericValues?.length > 0 && filter.filters.filterByNumericValues.map((i, index)=><FiltroNumericoSimples key={`filter + ${index}`} index={index} filter={i} />)} */}
+        {filter?.filters?.filterByNumericValues?.length > 0 && filter.filters.filterByNumericValues.map((i, index)=><FiltroNumericoSimples key={`filter + ${index}`} index={index} column={i.column} filter={i} onRemove={removeFiltro} />)}
+        
+        {/* {myFilters?.map((i, index)=><FiltroNumericoSimples index={index} />)} */}
         {/* {filter?.filters?.filterByNumericValues?.length == 0 && <FiltroNumericoSimples />} */}
-        <FiltroNumericoSimples />
+        {/* <FiltroNumericoSimples /> */}
         
         
         {/* <button onClick={()=>React.create}>criar</button> */}
