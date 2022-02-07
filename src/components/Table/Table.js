@@ -1,38 +1,32 @@
-
-import { useState, useContext, useEffect } from 'react';
-import { DataContext } from '../../contexts/DataContext';
-
-// import { SearchContext } from '../../App';
+import { useState, useContext, useEffect } from 'react'
+import { DataContext } from '../../contexts/DataContext'
 
 import './Table.css'
 
-
 export const Table = () => {
+  const [error, setError] = useState(null)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [, setData, filtered] = useContext(DataContext)
 
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [data, setData, filtered, performFilter] = useContext(DataContext);
-  
   useEffect(() => {
-    
-    fetch("https://swapi-trybe.herokuapp.com/api/planets/")
-      .then(res => res.json())
+    fetch('https://swapi-trybe.herokuapp.com/api/planets/')
+      .then((res) => res.json())
       .then(
         (result) => {
-          setIsLoaded(true);
+          setIsLoaded(true)
           setData(result.results)
         },
         (error) => {
-          setIsLoaded(true);
-          setError(error);
+          setIsLoaded(true)
+          setError(error)
         }
       )
   }, [])
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div>Error: {error.message}</div>
   } else if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>
   } else {
     return (
       <table>
@@ -54,7 +48,7 @@ export const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {filtered.map(planet => (
+          {filtered.map((planet) => (
             <tr key={planet.name}>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>
@@ -66,26 +60,21 @@ export const Table = () => {
               <td>{planet.surface_water}</td>
               <td>{planet.population}</td>
               <td>
-                {planet.films.map((value, index) => (<a key={`f`+ planet.name + index} href={value}>{index + 1}</a>)
-                )}
+                {planet.films.map((value, index) => (
+                  <a key={`f` + planet.name + index} href={value}>
+                    {index + 1}
+                  </a>
+                ))}
               </td>
               <td>{planet.created}</td>
               <td>{planet.edited}</td>
-              <td><a href={planet.url}>{planet.url}</a></td>
-
+              <td>
+                <a href={planet.url}>{planet.url}</a>
+              </td>
             </tr>
           ))}
         </tbody>
-        
-        
       </table>
-      
     )
-
   }
-  
-
 }
-    
-
-
